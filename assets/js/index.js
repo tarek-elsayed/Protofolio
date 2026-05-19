@@ -10,10 +10,6 @@ function debounce(callbackFunction, delayDuration) {
   };
 }
 
-/* -------------------------------------------------------------------------- */
-/*                            MOBILE NAVIGATION MENU                          */
-/* -------------------------------------------------------------------------- */
-
 function initializeMobileNavigationMenu() {
   const navigationLinksContainer = document.querySelector(".nav-links");
 
@@ -35,37 +31,26 @@ function initializeMobileNavigationMenu() {
 
     const menuIcon = mobileMenuButton.querySelector("i");
 
-    const isMenuOpen =
-      navigationLinksContainer.classList.contains("active");
+    const isMenuOpen = navigationLinksContainer.classList.contains("active");
 
-    menuIcon.className = isMenuOpen
-      ? "fa-solid fa-times"
-      : "fa-solid fa-bars";
+    menuIcon.className = isMenuOpen ? "fa-solid fa-times" : "fa-solid fa-bars";
   });
 
-  const navigationLinks =
-    navigationLinksContainer.querySelectorAll("a");
+  const navigationLinks = navigationLinksContainer.querySelectorAll("a");
 
   navigationLinks.forEach((navigationLink) => {
     navigationLink.addEventListener("click", () => {
       navigationLinksContainer.classList.remove("active");
 
-      mobileMenuButton.querySelector("i").className =
-        "fa-solid fa-bars";
+      mobileMenuButton.querySelector("i").className = "fa-solid fa-bars";
     });
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                              ACTIVE NAVIGATION                             */
-/* -------------------------------------------------------------------------- */
-
 function initializeActiveNavigationLinks() {
   const pageSections = document.querySelectorAll("section[id]");
 
-  const navigationLinks = document.querySelectorAll(
-    '.nav-links a[href^="#"]'
-  );
+  const navigationLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 
   function updateActiveNavigationState() {
     let activeSectionId = "";
@@ -81,8 +66,7 @@ function initializeActiveNavigationLinks() {
     navigationLinks.forEach((navigationLink) => {
       navigationLink.classList.remove("active");
 
-      const linkTarget =
-        navigationLink.getAttribute("href");
+      const linkTarget = navigationLink.getAttribute("href");
 
       if (linkTarget === `#${activeSectionId}`) {
         navigationLink.classList.add("active");
@@ -90,77 +74,44 @@ function initializeActiveNavigationLinks() {
     });
   }
 
-  window.addEventListener(
-    "scroll",
-    debounce(updateActiveNavigationState, 50)
-  );
+  window.addEventListener("scroll", debounce(updateActiveNavigationState, 50));
 
   updateActiveNavigationState();
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                THEME SYSTEM                                */
-/* -------------------------------------------------------------------------- */
-
-function applyThemeColors(
-  primaryColor,
-  secondaryColor,
-  accentColor
-) {
-  document.documentElement.style.setProperty(
-    "--color-primary",
-    primaryColor
-  );
+function applyThemeColors(primaryColor, secondaryColor, accentColor) {
+  document.documentElement.style.setProperty("--color-primary", primaryColor);
 
   document.documentElement.style.setProperty(
     "--color-secondary",
-    secondaryColor
+    secondaryColor,
   );
 
-  document.documentElement.style.setProperty(
-    "--color-accent",
-    accentColor
-  );
+  document.documentElement.style.setProperty("--color-accent", accentColor);
 }
 
 function initializeDarkModeToggle() {
-  const themeToggleButton = document.getElementById(
-    "theme-toggle-button"
-  );
+  const themeToggleButton = document.getElementById("theme-toggle-button");
 
   if (!themeToggleButton) return;
 
   const htmlRootElement = document.documentElement;
 
-  const savedTheme =
-    localStorage.getItem("theme") || "dark";
+  const savedTheme = localStorage.getItem("theme") || "dark";
 
-  htmlRootElement.classList.toggle(
-    "dark",
-    savedTheme === "dark"
-  );
+  htmlRootElement.classList.toggle("dark", savedTheme === "dark");
 
   themeToggleButton.addEventListener("click", () => {
-    const isDarkModeEnabled =
-      htmlRootElement.classList.toggle("dark");
+    const isDarkModeEnabled = htmlRootElement.classList.toggle("dark");
 
-    localStorage.setItem(
-      "theme",
-      isDarkModeEnabled ? "dark" : "light"
-    );
+    localStorage.setItem("theme", isDarkModeEnabled ? "dark" : "light");
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                              PORTFOLIO FILTER                              */
-/* -------------------------------------------------------------------------- */
-
 function initializePortfolioFilter() {
-  const filterButtons =
-    document.querySelectorAll(".portfolio-filter");
+  const filterButtons = document.querySelectorAll(".portfolio-filter");
 
-  const portfolioItems =
-    document.querySelectorAll(".portfolio-item");
+  const portfolioItems = document.querySelectorAll(".portfolio-item");
 
   if (!filterButtons.length || !portfolioItems.length) {
     return;
@@ -168,8 +119,7 @@ function initializePortfolioFilter() {
 
   filterButtons.forEach((filterButton) => {
     filterButton.addEventListener("click", function () {
-      const selectedCategory =
-        this.getAttribute("data-filter");
+      const selectedCategory = this.getAttribute("data-filter");
 
       filterButtons.forEach((buttonElement) => {
         buttonElement.classList.remove("active");
@@ -178,48 +128,32 @@ function initializePortfolioFilter() {
       this.classList.add("active");
 
       portfolioItems.forEach((portfolioItem) => {
-        const itemCategory =
-          portfolioItem.getAttribute("data-category");
+        const itemCategory = portfolioItem.getAttribute("data-category");
 
         const shouldDisplayItem =
-          selectedCategory === "all" ||
-          itemCategory === selectedCategory;
+          selectedCategory === "all" || itemCategory === selectedCategory;
 
-        portfolioItem.style.display = shouldDisplayItem
-          ? "block"
-          : "none";
+        portfolioItem.style.display = shouldDisplayItem ? "block" : "none";
       });
     });
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                           TESTIMONIALS CAROUSEL                            */
-/* -------------------------------------------------------------------------- */
-
 function initializeTestimonialsCarousel() {
-  const carouselContainer = document.getElementById(
-    "testimonials-carousel"
-  );
+  const carouselContainer = document.getElementById("testimonials-carousel");
 
   if (!carouselContainer) return;
 
-  const previousButton = document.getElementById(
-    "prev-testimonial"
-  );
+  const previousButton = document.getElementById("prev-testimonial");
 
-  const nextButton = document.getElementById(
-    "next-testimonial"
-  );
+  const nextButton = document.getElementById("next-testimonial");
 
-  const testimonialCards =
-    document.querySelectorAll(".testimonial-card");
+  const testimonialCards = document.querySelectorAll(".testimonial-card");
 
   let currentSlideIndex = 0;
 
   function updateCarouselPosition() {
-    carouselContainer.style.transform =
-      `translateX(${currentSlideIndex * 100}%)`;
+    carouselContainer.style.transform = `translateX(${currentSlideIndex * 100}%)`;
   }
 
   nextButton?.addEventListener("click", () => {
@@ -243,27 +177,18 @@ function initializeTestimonialsCarousel() {
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                           SCROLL TO TOP BUTTON                             */
-/* -------------------------------------------------------------------------- */
-
 function initializeScrollToTopButton() {
-  const scrollToTopButton =
-    document.getElementById("scroll-to-top");
+  const scrollToTopButton = document.getElementById("scroll-to-top");
 
   if (!scrollToTopButton) return;
 
   window.addEventListener(
     "scroll",
     debounce(() => {
-      const shouldShowButton =
-        window.scrollY > 300;
+      const shouldShowButton = window.scrollY > 300;
 
-      scrollToTopButton.classList.toggle(
-        "visible",
-        shouldShowButton
-      );
-    }, 100)
+      scrollToTopButton.classList.toggle("visible", shouldShowButton);
+    }, 100),
   );
 
   scrollToTopButton.addEventListener("click", () => {
@@ -274,79 +199,51 @@ function initializeScrollToTopButton() {
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                           CONTACT FORM VALIDATION                          */
-/* -------------------------------------------------------------------------- */
-
 function initializeContactFormValidation() {
-  const contactForm =
-    document.querySelector("#contact form");
+  const contactForm = document.querySelector("#contact form");
 
   if (!contactForm) return;
 
-  contactForm.addEventListener(
-    "submit",
-    (submitEvent) => {
-      submitEvent.preventDefault();
+  contactForm.addEventListener("submit", (submitEvent) => {
+    submitEvent.preventDefault();
 
-      clearValidationErrors(contactForm);
+    clearValidationErrors(contactForm);
 
-      const isFormValid =
-        validateContactForm(contactForm);
+    const isFormValid = validateContactForm(contactForm);
 
-      if (isFormValid) {
-        showSuccessPopup();
+    if (isFormValid) {
+      showSuccessPopup();
 
-        contactForm.reset();
-      }
+      contactForm.reset();
     }
-  );
+  });
 }
 
 function validateContactForm(contactForm) {
   let isFormValid = true;
 
-  const fullNameInput =
-    contactForm.querySelector(
-      'input[type="text"]'
-    );
+  const fullNameInput = contactForm.querySelector('input[type="text"]');
 
-  const emailInput =
-    contactForm.querySelector(
-      'input[type="email"]'
-    );
+  const emailInput = contactForm.querySelector('input[type="email"]');
 
-  const messageTextarea =
-    contactForm.querySelector("textarea");
+  const messageTextarea = contactForm.querySelector("textarea");
 
   if (!fullNameInput.value.trim()) {
-    createValidationError(
-      fullNameInput,
-      "يرجى إدخال الاسم الكامل"
-    );
+    createValidationError(fullNameInput, "يرجى إدخال الاسم الكامل");
 
     isFormValid = false;
   }
 
-  const emailValidationPattern =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (
-    !emailValidationPattern.test(emailInput.value)
-  ) {
-    createValidationError(
-      emailInput,
-      "يرجى إدخال بريد إلكتروني صحيح"
-    );
+  if (!emailValidationPattern.test(emailInput.value)) {
+    createValidationError(emailInput, "يرجى إدخال بريد إلكتروني صحيح");
 
     isFormValid = false;
   }
 
   if (messageTextarea.value.trim().length < 10) {
-    createValidationError(
-      messageTextarea,
-      "يرجى إدخال المزيد من التفاصيل"
-    );
+    createValidationError(messageTextarea, "يرجى إدخال المزيد من التفاصيل");
 
     isFormValid = false;
   }
@@ -354,44 +251,27 @@ function validateContactForm(contactForm) {
   return isFormValid;
 }
 
-function createValidationError(
-  targetInput,
-  errorMessage
-) {
-  const errorMessageElement =
-    document.createElement("p");
+function createValidationError(targetInput, errorMessage) {
+  const errorMessageElement = document.createElement("p");
 
-  errorMessageElement.className =
-    "error-message text-red-500 text-sm mt-1";
+  errorMessageElement.className = "error-message text-red-500 text-sm mt-1";
 
   errorMessageElement.textContent = errorMessage;
 
   targetInput.classList.add("border-red-500");
 
-  targetInput.parentElement.appendChild(
-    errorMessageElement
-  );
+  targetInput.parentElement.appendChild(errorMessageElement);
 }
 
 function clearValidationErrors(contactForm) {
-  contactForm
-    .querySelectorAll(".error-message")
-    .forEach((errorElement) => {
-      errorElement.remove();
-    });
+  contactForm.querySelectorAll(".error-message").forEach((errorElement) => {
+    errorElement.remove();
+  });
 
-  contactForm
-    .querySelectorAll(".border-red-500")
-    .forEach((invalidElement) => {
-      invalidElement.classList.remove(
-        "border-red-500"
-      );
-    });
+  contactForm.querySelectorAll(".border-red-500").forEach((invalidElement) => {
+    invalidElement.classList.remove("border-red-500");
+  });
 }
-
-/* -------------------------------------------------------------------------- */
-/*                               SUCCESS POPUP                                */
-/* -------------------------------------------------------------------------- */
 
 function showSuccessPopup() {
   const popupOverlay = document.createElement("div");
@@ -420,30 +300,16 @@ function showSuccessPopup() {
     });
 }
 
-/* -------------------------------------------------------------------------- */
-/*                             APPLICATION START                              */
-/* -------------------------------------------------------------------------- */
+initializeMobileNavigationMenu();
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    initializeMobileNavigationMenu();
+initializeActiveNavigationLinks();
 
-    initializeActiveNavigationLinks();
+initializeDarkModeToggle();
 
-    initializeDarkModeToggle();
+initializePortfolioFilter();
 
-    initializePortfolioFilter();
+initializeTestimonialsCarousel();
 
-    initializeTestimonialsCarousel();
+initializeScrollToTopButton();
 
-    initializeScrollToTopButton();
-
-    initializeContactFormValidation();
-
-    console.log(
-      "All application modules initialized successfully."
-    );
-  }
-);
-
+initializeContactFormValidation();
